@@ -1,23 +1,17 @@
 'use client';
 
-import { useState } from 'react';
 import { Joystick } from 'react-joystick-component';
 import { IJoystickUpdateEvent } from 'react-joystick-component/build/lib/Joystick';
 
 export default function DroneJoysticks() {
-  const [leftJoystickData, setLeftJoystickData] = useState({ x: 0, y: 0 });
-  const [rightJoystickData, setRightJoystickData] = useState({ x: 0, y: 0 });
-
   const handleLeftJoystickMove = (event: IJoystickUpdateEvent) => {
-    setLeftJoystickData({ x: event.x || 0, y: event.y || 0 });
     // In a real app, this would send commands to the drone for forward/backward and left/right movement
-    console.log('Left Joystick:', { x: event.x, y: event.y });
+    console.log('Left Joystick:', { x: event.x, y: event.y, direction: event.direction });
   };
 
   const handleRightJoystickMove = (event: IJoystickUpdateEvent) => {
-    setRightJoystickData({ x: event.x || 0, y: event.y || 0 });
     // In a real app, this would send commands to the drone for up/down and rotation
-    console.log('Right Joystick:', { x: event.x, y: event.y });
+    console.log('Right Joystick:', { x: event.x, y: event.y, direction: event.direction });
   };
 
   const handleJoystickStop = () => {
@@ -27,34 +21,38 @@ export default function DroneJoysticks() {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-30 pointer-events-none">
-      <div className="flex justify-between items-center w-full p-4">
+      <div className="flex justify-between items-center w-full p-6 pb-10">
         {/* Left Joystick - Movement (Forward/Backward, Left/Right) */}
-        <div className="pointer-events-auto bg-black bg-opacity-30 rounded-full p-2">
+        <div className="pointer-events-auto bg-black bg-opacity-20 backdrop-blur-sm rounded-full p-3 shadow-lg">
           <div className="relative">
             <Joystick 
-              size={100}
-              baseColor="rgba(0, 0, 0, 0.5)"
-              stickColor="rgba(255, 255, 255, 0.8)"
+              size={120}
+              throttle={100}
+              sticky={false}
+              baseColor="rgba(0, 0, 0, 0.3)"
+              stickColor="rgba(59, 130, 246, 0.9)"
               move={handleLeftJoystickMove}
               stop={handleJoystickStop}
             />
-            <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-white text-xs bg-black bg-opacity-50 px-2 py-1 rounded">
+            <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-white text-xs font-medium bg-black bg-opacity-40 backdrop-blur-sm px-3 py-1 rounded-full">
               Movement
             </div>
           </div>
         </div>
 
         {/* Right Joystick - Altitude and Rotation */}
-        <div className="pointer-events-auto bg-black bg-opacity-30 rounded-full p-2">
+        <div className="pointer-events-auto bg-black bg-opacity-20 backdrop-blur-sm rounded-full p-3 shadow-lg">
           <div className="relative">
             <Joystick 
-              size={100}
-              baseColor="rgba(0, 0, 0, 0.5)"
-              stickColor="rgba(255, 255, 255, 0.8)"
+              size={120}
+              throttle={100}
+              sticky={false}
+              baseColor="rgba(0, 0, 0, 0.3)"
+              stickColor="rgba(239, 68, 68, 0.9)"
               move={handleRightJoystickMove}
               stop={handleJoystickStop}
             />
-            <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-white text-xs bg-black bg-opacity-50 px-2 py-1 rounded">
+            <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-white text-xs font-medium bg-black bg-opacity-40 backdrop-blur-sm px-3 py-1 rounded-full">
               Altitude/Rotation
             </div>
           </div>
