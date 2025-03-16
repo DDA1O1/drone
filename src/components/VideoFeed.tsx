@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import DroneJoysticks from './DroneJoysticks';
 
 export default function VideoFeed() {
   const [isConnected, setIsConnected] = useState(false);
@@ -46,6 +47,9 @@ export default function VideoFeed() {
         <div className="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
           Live
         </div>
+        
+        {/* Add joysticks */}
+        <DroneJoysticks />
       </div>
     </div>
   );
