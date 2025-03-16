@@ -8,6 +8,7 @@ export default function DeviceDetection() {
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
   const [isLandscape, setIsLandscape] = useState(true);
   const [isConnected, setIsConnected] = useState(false);
+  const [isFlying, setIsFlying] = useState(false);
 
   useEffect(() => {
     // Detect if device is mobile or tablet
@@ -49,6 +50,25 @@ export default function DeviceDetection() {
 
   const handleDisconnect = () => {
     setIsConnected(false);
+    setIsFlying(false);
+  };
+
+  const handleTakeoff = () => {
+    // In a real app, this would send a takeoff command to the drone
+    console.log('Takeoff command sent');
+    setIsFlying(true);
+  };
+
+  const handleLand = () => {
+    // In a real app, this would send a land command to the drone
+    console.log('Land command sent');
+    setIsFlying(false);
+  };
+
+  const handleEmergency = () => {
+    // In a real app, this would send an emergency stop command to the drone
+    console.log('Emergency stop command sent');
+    setIsFlying(false);
   };
 
   if (!entered) {
@@ -98,6 +118,44 @@ export default function DeviceDetection() {
         )}
       </div>
       
+      {/* Flight Control Buttons */}
+      {isConnected && (
+        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-30 flex space-x-4">
+          {!isFlying ? (
+            <button 
+              onClick={handleTakeoff}
+              className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+              </svg>
+              Takeoff
+            </button>
+          ) : (
+            <>
+              <button 
+                onClick={handleLand}
+                className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                </svg>
+                Land
+              </button>
+              <button 
+                onClick={handleEmergency}
+                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                Emergency
+              </button>
+            </>
+          )}
+        </div>
+      )}
+      
       <div className="w-full h-screen flex items-center justify-center">
         {isConnected ? (
           /* In a real app, this would be a video stream */
@@ -113,8 +171,9 @@ export default function DeviceDetection() {
       </div>
       
       {isConnected && (
-        <div className="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
-          Live
+        <div className="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm flex items-center">
+          <div className={`h-3 w-3 rounded-full mr-2 ${isFlying ? 'bg-green-500 animate-pulse' : 'bg-yellow-500'}`}></div>
+          {isFlying ? 'Flying' : 'Ready'}
         </div>
       )}
       
