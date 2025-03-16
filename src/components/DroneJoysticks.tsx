@@ -23,14 +23,15 @@ export default function DroneJoysticks() {
     <div className="fixed bottom-0 left-0 right-0 z-30 pointer-events-none">
       <div className="flex justify-between items-center w-full p-6 pb-10">
         {/* Left Joystick - Movement (Forward/Backward, Left/Right) */}
-        <div className="pointer-events-auto bg-black bg-opacity-20 backdrop-blur-sm rounded-full p-3 shadow-lg">
+        <div className="pointer-events-auto bg-black bg-opacity-20 backdrop-blur-sm rounded-full p-3 shadow-lg border border-white border-opacity-50">
           <div className="relative">
             <Joystick 
               size={120}
+              stickSize={40}
               throttle={100}
               sticky={false}
               baseColor="rgba(0, 0, 0, 0.3)"
-              stickColor="rgba(59, 130, 246, 0.9)"
+              stickColor="rgba(255, 255, 255, 0.9)"
               move={handleLeftJoystickMove}
               stop={handleJoystickStop}
             />
@@ -41,14 +42,15 @@ export default function DroneJoysticks() {
         </div>
 
         {/* Right Joystick - Altitude and Rotation */}
-        <div className="pointer-events-auto bg-black bg-opacity-20 backdrop-blur-sm rounded-full p-3 shadow-lg">
+        <div className="pointer-events-auto bg-black bg-opacity-20 backdrop-blur-sm rounded-full p-3 shadow-lg border border-white border-opacity-50">
           <div className="relative">
             <Joystick 
               size={120}
+              stickSize={40}
               throttle={100}
               sticky={false}
               baseColor="rgba(0, 0, 0, 0.3)"
-              stickColor="rgba(239, 68, 68, 0.9)"
+              stickColor="rgba(255, 255, 255, 0.9)"
               move={handleRightJoystickMove}
               stop={handleJoystickStop}
             />
