@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tello Drone Control Interface
+
+A professional Next.js frontend application for controlling DJI Tello drones, with device-specific control systems.
+
+## Features
+
+- Modern, clean UI with responsive design
+- Device-specific control systems:
+  - Dual virtual joysticks for mobile/tablet users
+  - Keyboard controls (WASD + QE + Space/Shift) for desktop users
+- Comprehensive flight controls (takeoff, land, directional movement)
+- Real-time telemetry dashboard (battery, altitude, speed, temperature)
+- Live video feed display with connection status
+
+## Control Systems
+
+### Mobile/Tablet Controls
+- Dual joysticks for intuitive drone control:
+  - Left joystick: Forward/backward and left/right movement
+  - Right joystick: Altitude (up/down) and rotation
+- Quick access buttons for takeoff, landing, and emergency stop
+- Touch-optimized interface elements
+- Helpful instruction banners for first-time users
+
+### Desktop Controls
+- Keyboard-based control system:
+  - W/S: Forward/backward movement
+  - A/D: Left/right movement
+  - Q/E: Rotate left/right
+  - Space/Shift: Up/down movement
+- Visual keyboard control indicator
+- Real-time movement feedback
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository
+2. Install dependencies:
+   ```
+   npm install
+   ```
+3. Run the development server:
+   ```
+   npm run dev
+   ```
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
+5. For mobile testing, use your device or Chrome DevTools mobile emulation
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tech Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Next.js 14
+- TypeScript
+- Tailwind CSS
+- React Hooks for state management
+- Responsive design with device detection
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Implementation Details
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Frontend-only implementation with simulated drone responses
+- Device detection for optimized control experience
+- Responsive design that works on all device sizes
+- SVG icons for clean, scalable UI elements
+- Keyboard event handling for desktop controls
 
-## Learn More
+## Future Improvements
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Backend integration with Tello SDK
+- Real-time video streaming
+- Flight path planning and waypoint navigation
+- Mission programming interface
+- Flight data recording and playback
