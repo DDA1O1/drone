@@ -7,6 +7,7 @@ export default function DeviceDetection() {
   const [entered, setEntered] = useState(false);
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
   const [isLandscape, setIsLandscape] = useState(true);
+  const [isConnected, setIsConnected] = useState(false);
   const [isFlying, setIsFlying] = useState(false);
 
   useEffect(() => {
@@ -43,21 +44,23 @@ export default function DeviceDetection() {
     setEntered(true);
   };
 
+  const handleConnect = () => {
+    // Dummy function for UI demonstration
+    setIsConnected(!isConnected);
+  };
+
   const handleTakeoff = () => {
-    // In a real app, this would send a takeoff command to the drone
-    console.log('Takeoff command sent');
+    // Dummy function for UI demonstration
     setIsFlying(true);
   };
 
   const handleLand = () => {
-    // In a real app, this would send a land command to the drone
-    console.log('Land command sent');
+    // Dummy function for UI demonstration
     setIsFlying(false);
   };
 
   const handleEmergency = () => {
-    // In a real app, this would send an emergency stop command to the drone
-    console.log('Emergency stop command sent');
+    // Dummy function for UI demonstration
     setIsFlying(false);
   };
 
@@ -90,6 +93,30 @@ export default function DeviceDetection() {
 
   return (
     <div className="min-h-screen bg-black relative">
+      {/* Connect Button */}
+      <div className="absolute top-4 right-4 z-30">
+        <button 
+          onClick={handleConnect}
+          className={`${isConnected ? 'bg-red-500 hover:bg-red-600' : 'bg-blue-500 hover:bg-blue-600'} text-white px-3 py-1 rounded-md text-sm font-medium transition-colors flex items-center`}
+        >
+          {isConnected ? (
+            <>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+              Disconnect
+            </>
+          ) : (
+            <>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              Connect
+            </>
+          )}
+        </button>
+      </div>
+      
       {/* Flight Control Buttons - Always visible */}
       <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-30 flex space-x-4">
         {!isFlying ? (
@@ -129,23 +156,32 @@ export default function DeviceDetection() {
       <div className="w-full h-screen flex items-center justify-center">
         {/* Video placeholder - always visible */}
         <div className="w-full h-full bg-gray-900 flex items-center justify-center">
-          {isFlying ? (
-            /* In a real app, this would be a video stream */
-            <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+          {isConnected ? (
+            isFlying ? (
+              /* In a real app, this would be a video stream */
+              <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            ) : (
+              <div className="text-gray-400 flex flex-col items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-24 w-24 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                <span className="text-xl">Press Takeoff to start flying</span>
+              </div>
+            )
           ) : (
             <div className="text-gray-400 flex flex-col items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-24 w-24 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
               </svg>
-              <span className="text-xl">Press Takeoff to start flying</span>
+              <span className="text-xl">Connect to view drone feed</span>
             </div>
           )}
         </div>
       </div>
       
       <div className="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm flex items-center">
-        <div className={`h-3 w-3 rounded-full mr-2 ${isFlying ? 'bg-green-500 animate-pulse' : 'bg-yellow-500'}`}></div>
-        {isFlying ? 'Flying' : 'Ready'}
+        <div className={`h-3 w-3 rounded-full mr-2 ${isFlying ? 'bg-green-500 animate-pulse' : isConnected ? 'bg-yellow-500' : 'bg-red-500'}`}></div>
+        {isFlying ? 'Flying' : isConnected ? 'Ready' : 'Disconnected'}
       </div>
       
       {/* Always show joysticks */}
