@@ -28,12 +28,12 @@ export default function DroneJoysticks() {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-30 pointer-events-none">
+    <div className="fixed bottom-0 left-0 right-0 z-50 pointer-events-none">
       <div className="flex justify-between items-center w-full p-6 pb-10">
         {/* Left Joystick - Movement (Forward/Backward, Left/Right) */}
         <div className="pointer-events-auto bg-black bg-opacity-20 backdrop-blur-sm rounded-full p-3 shadow-lg border border-white border-opacity-50 relative">
           {/* Directional Arrows */}
-          <div className="absolute inset-0 z-10">
+          <div className="absolute inset-0 z-0">
             {/* Up Arrow */}
             <div className={`absolute top-3 left-1/2 transform -translate-x-1/2 transition-opacity ${leftDirection === 'FORWARD' ? 'opacity-100' : 'opacity-40'}`}>
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="white">
@@ -60,7 +60,7 @@ export default function DroneJoysticks() {
             </div>
           </div>
 
-          <div className="relative">
+          <div className="relative z-10">
             <Joystick 
               size={100}
               stickSize={30}
@@ -80,7 +80,7 @@ export default function DroneJoysticks() {
         {/* Right Joystick - Altitude and Rotation */}
         <div className="pointer-events-auto bg-black bg-opacity-20 backdrop-blur-sm rounded-full p-3 shadow-lg border border-white border-opacity-50 relative">
           {/* Directional Arrows */}
-          <div className="absolute inset-0 z-10">
+          <div className="absolute inset-0 z-0">
             {/* Up Arrow */}
             <div className={`absolute top-3 left-1/2 transform -translate-x-1/2 transition-opacity ${rightDirection === 'FORWARD' ? 'opacity-100' : 'opacity-40'}`}>
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="white">
@@ -107,7 +107,7 @@ export default function DroneJoysticks() {
             </div>
           </div>
 
-          <div className="relative">
+          <div className="relative z-10">
             <Joystick 
               size={100}
               stickSize={30}

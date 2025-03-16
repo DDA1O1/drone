@@ -2,12 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import DroneJoysticks from './DroneJoysticks';
+import SimpleJoystick from './SimpleJoystick';
 
 export default function DeviceDetection() {
   const [entered, setEntered] = useState(false);
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
   const [isLandscape, setIsLandscape] = useState(true);
   const [isConnected, setIsConnected] = useState(false);
+  const [useSimpleJoystick, setUseSimpleJoystick] = useState(true);
 
   useEffect(() => {
     // Detect if device is mobile or tablet
@@ -49,6 +51,10 @@ export default function DeviceDetection() {
 
   const handleDisconnect = () => {
     setIsConnected(false);
+  };
+
+  const toggleJoystickType = () => {
+    setUseSimpleJoystick(!useSimpleJoystick);
   };
 
   if (!entered) {
@@ -98,6 +104,15 @@ export default function DeviceDetection() {
         )}
       </div>
       
+      <div className="absolute top-4 left-4 z-30">
+        <button 
+          onClick={toggleJoystickType}
+          className="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded-md text-sm font-medium transition-colors"
+        >
+          {useSimpleJoystick ? 'Use Advanced Joysticks' : 'Use Simple Joystick'}
+        </button>
+      </div>
+      
       <div className="w-full h-screen flex items-center justify-center">
         {isConnected ? (
           /* In a real app, this would be a video stream */
@@ -118,8 +133,8 @@ export default function DeviceDetection() {
         </div>
       )}
       
-      {/* Always show joysticks */}
-      <DroneJoysticks />
+      {/* Toggle between simple and advanced joysticks */}
+      {useSimpleJoystick ? <SimpleJoystick /> : <DroneJoysticks />}
     </div>
   );
 } 
