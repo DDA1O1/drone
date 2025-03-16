@@ -93,6 +93,12 @@ export default function DeviceDetection() {
 
   return (
     <div className="min-h-screen bg-black relative">
+      {/* Status Indicator - Top Left */}
+      <div className="absolute top-4 left-4 z-30 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm flex items-center">
+        <div className={`h-3 w-3 rounded-full mr-2 ${isFlying ? 'bg-green-500 animate-pulse' : isConnected ? 'bg-yellow-500' : 'bg-red-500'}`}></div>
+        {isFlying ? 'Flying' : isConnected ? 'Ready' : 'Disconnected'}
+      </div>
+      
       {/* Connect Button */}
       <div className="absolute top-4 right-4 z-30">
         <button 
@@ -177,11 +183,6 @@ export default function DeviceDetection() {
             </div>
           )}
         </div>
-      </div>
-      
-      <div className="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm flex items-center">
-        <div className={`h-3 w-3 rounded-full mr-2 ${isFlying ? 'bg-green-500 animate-pulse' : isConnected ? 'bg-yellow-500' : 'bg-red-500'}`}></div>
-        {isFlying ? 'Flying' : isConnected ? 'Ready' : 'Disconnected'}
       </div>
       
       {/* Always show joysticks */}
