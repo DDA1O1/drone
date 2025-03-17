@@ -48,14 +48,11 @@ export default function DroneControl() {
     </div>
   ) : null;
   
-  // Force desktop mode for testing
-  const forceDesktop = true;
-  
   // Render appropriate control interface based on device type
   return (
     <>
       {debugOverlay}
-      {forceDesktop ? <DroneControlDesktop /> : (isMobileOrTablet ? <DroneControlMobile /> : <DroneControlDesktop />)}
+      {isMobileOrTablet ? <DroneControlMobile /> : <DroneControlDesktop />}
     </>
   );
 } 
