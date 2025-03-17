@@ -8,9 +8,7 @@ interface JoystickPosition {
 }
 
 export default function DroneJoysticks() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [leftPosition, setLeftPosition] = useState<JoystickPosition>({ x: 0, y: 0 });
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [rightPosition, setRightPosition] = useState<JoystickPosition>({ x: 0, y: 0 });
   
   const leftJoystickRef = useRef<HTMLDivElement>(null);
