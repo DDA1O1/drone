@@ -7,7 +7,7 @@ export default function DroneControlMobile() {
   const [entered, setEntered] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [isFlying, setIsFlying] = useState(false);
-  const [batteryLevel, setBatteryLevel] = useState(100); // Battery level in percentage
+  const [batteryLevel] = useState(100); // Battery level in percentage
 
   const handleEnter = () => {
     setEntered(true);

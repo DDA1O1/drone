@@ -2,11 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
-interface DroneKeyboardControlsProps {
-  isActive: boolean;
-}
-
-export default function DroneKeyboardControls({ isActive }: DroneKeyboardControlsProps) {
+export default function DroneKeyboardControls() {
   const [activeKeys, setActiveKeys] = useState<Set<string>>(new Set());
 
   useEffect(() => {
@@ -36,7 +32,7 @@ export default function DroneKeyboardControls({ isActive }: DroneKeyboardControl
       }
     };
 
-    // Always add keyboard listeners regardless of isActive prop
+    // Always add keyboard listeners
     console.log('Adding keyboard event listeners');
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
@@ -46,7 +42,7 @@ export default function DroneKeyboardControls({ isActive }: DroneKeyboardControl
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
     };
-  }, []); // Remove isActive dependency
+  }, []);
 
   return (
     <>

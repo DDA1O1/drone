@@ -6,7 +6,7 @@ import DroneControlMobile from '@/components/DroneControlMobile';
 import DroneControlDesktop from '@/components/DroneControlDesktop';
 
 export default function DroneControl() {
-  const { isMobileOrTablet, isLandscape, isDesktop } = useDeviceDetection();
+  const { isMobileOrTablet, isLandscape } = useDeviceDetection();
   const [showDebug, setShowDebug] = useState(true);
   
   // Hide debug info after 10 seconds

@@ -1,16 +1,6 @@
 'use client';
 
-import { useState } from 'react';
-
-interface JoystickPosition {
-  x: number;
-  y: number;
-}
-
 export default function DroneJoysticks() {
-  const [leftPosition, setLeftPosition] = useState<JoystickPosition>({ x: 0, y: 0 });
-  const [rightPosition, setRightPosition] = useState<JoystickPosition>({ x: 0, y: 0 });
-  
   // Simple joystick UI without complex interactions for demo purposes
   return (
     <div className="fixed bottom-0 left-0 right-0 flex justify-between p-8 z-40 pointer-events-none">
