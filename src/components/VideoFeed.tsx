@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import DroneJoysticks from './DroneJoysticks';
+import DroneJoysticks from '@/components/DroneJoysticks';
 
 export default function VideoFeed() {
   const [isConnected, setIsConnected] = useState(false);

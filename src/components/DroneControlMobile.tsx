@@ -1,44 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import DroneJoysticks from './DroneJoysticks';
+import { useState } from 'react';
+import DroneJoysticks from '@/components/DroneJoysticks';
 
-export default function DeviceDetection() {
+export default function DroneControlMobile() {
   const [entered, setEntered] = useState(false);
-  const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
-  const [isLandscape, setIsLandscape] = useState(true);
   const [isConnected, setIsConnected] = useState(false);
   const [isFlying, setIsFlying] = useState(false);
-
-  useEffect(() => {
-    // Detect if device is mobile or tablet
-    const checkDevice = () => {
-      const userAgent = navigator.userAgent.toLowerCase();
-      const isMobile = /iphone|ipad|ipod|android|blackberry|windows phone/g.test(userAgent);
-      const isTablet = /(ipad|tablet|playbook|silk)|(android(?!.*mobile))/g.test(userAgent);
-      
-      setIsMobileOrTablet(isMobile || isTablet);
-      
-      // Check orientation
-      checkOrientation();
-    };
-    
-    // Check device orientation
-    const checkOrientation = () => {
-      setIsLandscape(window.innerWidth > window.innerHeight);
-    };
-    
-    // Add event listener for orientation changes
-    window.addEventListener('resize', checkOrientation);
-    
-    // Initial check
-    checkDevice();
-    
-    // Cleanup
-    return () => {
-      window.removeEventListener('resize', checkOrientation);
-    };
-  }, []);
+  const [batteryLevel, setBatteryLevel] = useState(100); // Battery level in percentage
 
   const handleEnter = () => {
     setEntered(true);
@@ -64,6 +33,43 @@ export default function DeviceDetection() {
     setIsFlying(false);
   };
 
+  // Battery icon based on level
+  const getBatteryIcon = () => {
+    if (batteryLevel >= 75) {
+      return (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm2 1v8h12V6H4z" />
+          <path d="M17 8h1.5a.5.5 0 01.5.5v3a.5.5 0 01-.5.5H17V8z" />
+          <rect x="5" y="7" width="9" height="6" fill="currentColor" />
+        </svg>
+      );
+    } else if (batteryLevel >= 50) {
+      return (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm2 1v8h12V6H4z" />
+          <path d="M17 8h1.5a.5.5 0 01.5.5v3a.5.5 0 01-.5.5H17V8z" />
+          <rect x="5" y="7" width="6" height="6" fill="currentColor" />
+        </svg>
+      );
+    } else if (batteryLevel >= 25) {
+      return (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm2 1v8h12V6H4z" />
+          <path d="M17 8h1.5a.5.5 0 01.5.5v3a.5.5 0 01-.5.5H17V8z" />
+          <rect x="5" y="7" width="4" height="6" fill="currentColor" />
+        </svg>
+      );
+    } else {
+      return (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm2 1v8h12V6H4z" />
+          <path d="M17 8h1.5a.5.5 0 01.5.5v3a.5.5 0 01-.5.5H17V8z" />
+          <rect x="5" y="7" width="2" height="6" fill="currentColor" />
+        </svg>
+      );
+    }
+  };
+
   if (!entered) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -77,26 +83,20 @@ export default function DeviceDetection() {
     );
   }
 
-  if (isMobileOrTablet && !isLandscape) {
-    return (
-      <div className="flex items-center justify-center min-h-screen p-6">
-        <div className="bg-white rounded-lg shadow-md p-8 max-w-md text-center">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto mb-4 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-          </svg>
-          <h2 className="text-2xl font-bold mb-4">Please Rotate Your Device</h2>
-          <p className="text-gray-600 mb-6">For the best experience with the drone control interface, please rotate your device to landscape orientation.</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-black relative">
       {/* Status Indicator - Top Left */}
-      <div className="absolute top-4 left-4 z-30 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm flex items-center">
-        <div className={`h-3 w-3 rounded-full mr-2 ${isFlying ? 'bg-green-500 animate-pulse' : isConnected ? 'bg-yellow-500' : 'bg-red-500'}`}></div>
-        {isFlying ? 'Flying' : isConnected ? 'Ready' : 'Disconnected'}
+      <div className="absolute top-4 left-4 z-30 flex items-center space-x-2">
+        <div className="bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm flex items-center">
+          <div className={`h-3 w-3 rounded-full mr-2 ${isFlying ? 'bg-green-500 animate-pulse' : isConnected ? 'bg-yellow-500' : 'bg-red-500'}`}></div>
+          {isFlying ? 'Flying' : isConnected ? 'Ready' : 'Disconnected'}
+        </div>
+        
+        {/* Battery Indicator */}
+        <div className="bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm flex items-center">
+          {getBatteryIcon()}
+          <span className="ml-1">{batteryLevel}%</span>
+        </div>
       </div>
       
       {/* Connect Button */}
