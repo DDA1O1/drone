@@ -191,7 +191,7 @@ export default function DroneJoysticks() {
         {/* Joystick Knob */}
         <div 
           ref={leftKnobRef}
-          className={`w-12 h-12 ${leftActive ? 'bg-blue-500 bg-opacity-70' : 'bg-white bg-opacity-30'} rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-colors border border-white`}
+          className={`w-12 h-12 ${leftActive ? 'bg-transparent' : 'bg-transparent'} rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-colors border-2 border-white`}
         >
           <span className="text-xs font-semibold text-white">ALT</span>
         </div>
@@ -238,7 +238,7 @@ export default function DroneJoysticks() {
         {/* Joystick Knob */}
         <div 
           ref={rightKnobRef}
-          className={`w-12 h-12 ${rightActive ? 'bg-blue-500 bg-opacity-70' : 'bg-white bg-opacity-30'} rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-colors border border-white`}
+          className={`w-12 h-12 ${rightActive ? 'bg-transparent' : 'bg-transparent'} rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-colors border-2 border-white`}
         >
           <span className="text-xs font-semibold text-white">MOVE</span>
         </div>
