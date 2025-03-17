@@ -132,35 +132,117 @@ export default function DroneJoysticks() {
     };
   }, [leftActive, rightActive]);
   
+  // Helper function to determine if arrow should be highlighted
+  const isArrowActive = (position: JoystickPosition, direction: 'up' | 'down' | 'left' | 'right'): boolean => {
+    const threshold = 0.5; // Activation threshold
+    
+    switch (direction) {
+      case 'up':
+        return position.y < -threshold;
+      case 'down':
+        return position.y > threshold;
+      case 'left':
+        return position.x < -threshold;
+      case 'right':
+        return position.x > threshold;
+      default:
+        return false;
+    }
+  };
+  
   return (
     <div className="fixed bottom-0 left-0 right-0 flex justify-between p-8 z-40 pointer-events-none">
       {/* Left Joystick - Altitude and Rotation */}
       <div 
         ref={leftJoystickRef}
-        className="w-32 h-32 bg-black bg-opacity-50 rounded-full relative pointer-events-auto"
+        className="w-32 h-32 bg-transparent border-2 border-white rounded-full relative pointer-events-auto"
         onMouseDown={() => setLeftActive(true)}
         onTouchStart={() => setLeftActive(true)}
       >
+        {/* Directional Arrows */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          {/* Up Arrow */}
+          <div className={`absolute top-2 left-1/2 transform -translate-x-1/2 ${isArrowActive(leftPosition, 'up') ? 'text-white' : 'text-gray-400'}`}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            </svg>
+          </div>
+          
+          {/* Down Arrow */}
+          <div className={`absolute bottom-2 left-1/2 transform -translate-x-1/2 ${isArrowActive(leftPosition, 'down') ? 'text-white' : 'text-gray-400'}`}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+          </div>
+          
+          {/* Left Arrow */}
+          <div className={`absolute left-2 top-1/2 transform -translate-y-1/2 ${isArrowActive(leftPosition, 'left') ? 'text-white' : 'text-gray-400'}`}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+          </div>
+          
+          {/* Right Arrow */}
+          <div className={`absolute right-2 top-1/2 transform -translate-y-1/2 ${isArrowActive(leftPosition, 'right') ? 'text-white' : 'text-gray-400'}`}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </div>
+        </div>
+        
+        {/* Joystick Knob */}
         <div 
           ref={leftKnobRef}
-          className={`w-16 h-16 ${leftActive ? 'bg-blue-500' : 'bg-gray-300'} rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-colors`}
+          className={`w-12 h-12 ${leftActive ? 'bg-blue-500 bg-opacity-70' : 'bg-white bg-opacity-30'} rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-colors border border-white`}
         >
-          <span className="text-xs font-semibold text-gray-700">ALT/ROT</span>
+          <span className="text-xs font-semibold text-white">ALT</span>
         </div>
       </div>
       
       {/* Right Joystick - Direction */}
       <div 
         ref={rightJoystickRef}
-        className="w-32 h-32 bg-black bg-opacity-50 rounded-full relative pointer-events-auto"
+        className="w-32 h-32 bg-transparent border-2 border-white rounded-full relative pointer-events-auto"
         onMouseDown={() => setRightActive(true)}
         onTouchStart={() => setRightActive(true)}
       >
+        {/* Directional Arrows */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          {/* Up Arrow */}
+          <div className={`absolute top-2 left-1/2 transform -translate-x-1/2 ${isArrowActive(rightPosition, 'up') ? 'text-white' : 'text-gray-400'}`}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            </svg>
+          </div>
+          
+          {/* Down Arrow */}
+          <div className={`absolute bottom-2 left-1/2 transform -translate-x-1/2 ${isArrowActive(rightPosition, 'down') ? 'text-white' : 'text-gray-400'}`}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+          </div>
+          
+          {/* Left Arrow */}
+          <div className={`absolute left-2 top-1/2 transform -translate-y-1/2 ${isArrowActive(rightPosition, 'left') ? 'text-white' : 'text-gray-400'}`}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+          </div>
+          
+          {/* Right Arrow */}
+          <div className={`absolute right-2 top-1/2 transform -translate-y-1/2 ${isArrowActive(rightPosition, 'right') ? 'text-white' : 'text-gray-400'}`}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </div>
+        </div>
+        
+        {/* Joystick Knob */}
         <div 
           ref={rightKnobRef}
-          className={`w-16 h-16 ${rightActive ? 'bg-blue-500' : 'bg-gray-300'} rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-colors`}
+          className={`w-12 h-12 ${rightActive ? 'bg-blue-500 bg-opacity-70' : 'bg-white bg-opacity-30'} rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-colors border border-white`}
         >
-          <span className="text-xs font-semibold text-gray-700">MOVE</span>
+          <span className="text-xs font-semibold text-white">MOVE</span>
         </div>
       </div>
     </div>
